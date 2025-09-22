@@ -1,4 +1,4 @@
-# Cleanup Windows 11 PowerShell Script v0.0.0
+# Cleanup Windows 11 PowerShell Script v0.0.1
 ## what to do:
 ##### copy/pasta in PowerShell or click run cleanup.bat in zip
 
@@ -14,7 +14,6 @@ $Paths=@(
     "$env:APPDATA\Mozilla\Firefox\Profiles\*\jumpListCache",
     "$env:APPDATA\Mozilla\Firefox\Profiles\*\offlineCache",
     "$env:LOCALAPPDATA\Crashdumps",
-    "$env:LOCALAPPDATA\D3DSCache",
     "$env:LOCALAPPDATA\Google\Chrome\User Data\*\Cache",
     "$env:LOCALAPPDATA\Google\Chrome\User Data\*\Code Cache",
     "$env:LOCALAPPDATA\Google\Chrome\User Data\*\GPUCache",
