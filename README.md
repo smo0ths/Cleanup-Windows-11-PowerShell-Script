@@ -1,6 +1,6 @@
 # Cleanup Windows 11 PowerShell Script v0.0.2
 ## what to do:
-##### copy/pasta in PowerShell or click run cleanup.bat in zip
+##### copy/pasta in PowerShell
 
 ```python
 $shell=New-Object -ComObject 'Shell.Application'
