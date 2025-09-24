@@ -1,4 +1,4 @@
-# Cleanup Windows 11 PowerShell Script v0.0.2
+# Cleanup Windows 11 PowerShell Script v0.0.3
 ## what to do:
 ##### copy/pasta in PowerShell
 
@@ -39,6 +39,7 @@ $patterns=@(
 "$env:ProgramData\Microsoft\Windows\WER\ReportQueue",
 "$env:ProgramData\Microsoft\Windows\WER\Temp",
 "$env:ProgramData\Usoshared\Logs",
+"$env:SystemDrive\*.log",
 "$env:SystemDrive\PerfLogs",
 "$env:SystemRoot\LiveKernelReports",
 "$env:SystemRoot\Logs\CBS",
@@ -54,6 +55,9 @@ $patterns=@(
 "$env:SystemRoot\Temp",
 "$env:SystemRoot\WinSxS\Temp\Inflight",
 "$env:TEMP",
+"$env:USERPROFILE\.dotnet\*.dotnetUserLevelCache",
+"$env:USERPROFILE\.dotnet\*MachineId*"
+"$env:USERPROFILE\.dotnet\TelemetryStorageService",
 "$env:USERPROFILE\Downloads"
 )
 $chromeUserData=Join-Path $env:LOCALAPPDATA 'Google\Chrome\User Data'
