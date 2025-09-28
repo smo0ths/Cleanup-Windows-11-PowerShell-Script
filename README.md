@@ -56,7 +56,7 @@ $patterns=@(
 "$env:SystemRoot\WinSxS\Temp\Inflight",
 "$env:TEMP",
 "$env:USERPROFILE\.dotnet\*.dotnetUserLevelCache",
-"$env:USERPROFILE\.dotnet\*MachineId*"
+"$env:USERPROFILE\.dotnet\*MachineId*",
 "$env:USERPROFILE\.dotnet\TelemetryStorageService",
 "$env:USERPROFILE\Downloads"
 )
