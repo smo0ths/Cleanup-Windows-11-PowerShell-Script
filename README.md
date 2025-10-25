@@ -1,23 +1,27 @@
-# Cleanup Windows 11 PowerShell Script v0.0.3
+# Cleanup Windows 11 PowerShell Script v0.0.4
 ## what to do:
 ##### copy/pasta in PowerShell
 
 ```python
-$shell=New-Object -ComObject 'Shell.Application'
-function Clear-Items{
-  param([string]$Path)
-  if(-not (Test-Path $Path)){return}
-  Write-Host "Scanning: $Path"
-  Get-ChildItem $Path -File -Recurse -Force -ErrorAction SilentlyContinue|
-    ForEach-Object{
-      $full=$_.FullName
-      $folder=Split-Path $full -Parent
-      $leaf=Split-Path $full -Leaf
-      $item=$shell.Namespace($folder).ParseName($leaf)
-      if($item){
-        try{$item.InvokeVerb('delete');$script:TotalFiles++;$script:TotalSize+=$_.Length}
-        catch{Write-Warning "Skipped: `"$full`"`n    → $($_.Exception.Message)"}
-      }else{Write-Warning "Couldn’t shell-parse: $full"}
+Add-Type -AssemblyName Microsoft.VisualBasic   # Load the .NET helper for Recycle Bin operations
+function Clear-Items {
+    param([string]$Path)
+    if (-not (Test-Path $Path)) { return }
+    Write-Host "Scanning: $Path"
+    # Delete files → Recycle Bin, no prompts
+    Get-ChildItem $Path -File -Recurse -Force -ErrorAction SilentlyContinue | ForEach-Object {
+        try {
+            [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile(
+                $_.FullName,
+                'OnlyErrorDialogs',   # suppresses confirmation prompts
+                'SendToRecycleBin'    # ensures Recycle Bin, not permanent delete
+            )
+            $script:TotalFiles++
+            $script:TotalSize += $_.Length
+        }
+        catch {
+            Write-Warning "Skipped: `"$($_.FullName)`"`n    → $($_.Exception.Message)"
+        }
     }
 }
 [int]$TotalFiles=0
@@ -27,13 +31,11 @@ $patterns=@(
 "$env:LOCALAPPDATA\LocalLow\Microsoft\CryptnetUrlCache\Content",
 "$env:LOCALAPPDATA\Low\Temp",
 "$env:LOCALAPPDATA\Microsoft\Windows\INetCache\IE",
-"$env:LOCALAPPDATA\Microsoft\Windows\WebCache",
 "$env:LOCALAPPDATA\Packages\Microsoft.WindowsStore_*\AC\Temp",
 "$env:LOCALAPPDATA\Packages\Microsoft.WindowsStore_*\LocalCache",
 "$env:LOCALAPPDATA\Roaming\discord\Code Cache\js",
 "$env:LOCALAPPDATA\Temp",
 "$env:ProgramData\Microsoft\Windows Defender\Scans\History\Store",
-"$env:ProgramData\Microsoft\Windows\Caches",
 "$env:ProgramData\Microsoft\Windows\DeliveryOptimization\Logs",
 "$env:ProgramData\Microsoft\Windows\WER\ReportArchive",
 "$env:ProgramData\Microsoft\Windows\WER\ReportQueue",
@@ -41,9 +43,6 @@ $patterns=@(
 "$env:ProgramData\Usoshared\Logs",
 "$env:SystemDrive\*.log",
 "$env:SystemDrive\PerfLogs",
-"$env:SystemRoot\LiveKernelReports",
-"$env:SystemRoot\Logs\CBS",
-"$env:SystemRoot\Logs\DISM",
 "$env:SystemRoot\Minidump",
 "$env:SystemRoot\Panther\*",
 "$env:SystemRoot\Prefetch",
@@ -53,7 +52,6 @@ $patterns=@(
 "$env:SystemRoot\SoftwareDistribution\PostRebootEventCache",
 "$env:SystemRoot\System32\Sru",
 "$env:SystemRoot\Temp",
-"$env:SystemRoot\WinSxS\Temp\Inflight",
 "$env:TEMP",
 "$env:USERPROFILE\.dotnet\*.dotnetUserLevelCache",
 "$env:USERPROFILE\.dotnet\*MachineId*",
