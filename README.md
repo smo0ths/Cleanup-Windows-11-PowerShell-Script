@@ -1,5 +1,6 @@
 # Cleanup Windows 11 PowerShell Script v0.0.4
 ## what to do:
+##### disable network adaptor(ncpa.cpl) and close programs/open windows
 ##### copy/pasta in PowerShell
 
 ```python
