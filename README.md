@@ -1,4 +1,4 @@
-# Cleanup Windows 11 PowerShell Script v0.0.4
+# Cleanup Windows 11 PowerShell Script v0.0.5
 ## what to do:
 ##### disable network adaptor(ncpa.cpl) and close programs/open windows
 ##### copy/pasta in PowerShell
@@ -51,6 +51,8 @@ $patterns=@(
 "$env:SystemRoot\SoftwareDistribution\DeliveryOptimization\Cache",
 "$env:SystemRoot\SoftwareDistribution\Download",
 "$env:SystemRoot\SoftwareDistribution\PostRebootEventCache",
+"$env:SystemRoot\System32\SleepStudy",
+"$env:SystemRoot\System32\SleepStudy\ScreenOn",
 "$env:SystemRoot\System32\Sru",
 "$env:SystemRoot\Temp",
 "$env:TEMP",
